@@ -12,8 +12,19 @@ package sudokuSolver;
 public class Board {
 	private Box[] boardBox;
 	private Move[] moveQueue;
+	boolean isActive;
 	
-	private void pushMove(int row, int col, int value){
+	Board(){
+		isActive = false; // Default: the game can't be played
+		/*
+		 * I have to implement a creator that receives the right value and passes them on
+		 * to the subsequent creators. I will probably need to modify the creators in order
+		 * to receive the values and pass them along.
+		 */
+	}
+
+	// Move queue: push and poll. 
+	private boolean pushMove(int row, int col, int value){
 		Move theMove = new Move(row, col, value);
 		if(theMove.getIsValid()){
 			int theLength = moveQueue.length + 1;
@@ -22,7 +33,10 @@ public class Board {
 				theQueue[i] = moveQueue[i];
 			theQueue[theLength - 1] = theMove;
 			moveQueue = theQueue;
+			return true;
 		}
+		else
+			return false;
 	}
 	private Move pollMove(){
 		int theLength = moveQueue.length;
@@ -37,4 +51,17 @@ public class Board {
 		moveQueue = theQueue;
 		return theMove;
 	}
+	
+	/**
+	 * Adds a move to the queue
+	 * 
+	 * @return true if done, false if not done
+	 */
+	public boolean queueMove(int row, int col, int value){
+		if(pushMove(row, col, value))
+			return true;
+		else
+			return false;
+	}
+	
 }

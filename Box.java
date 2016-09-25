@@ -64,13 +64,39 @@ public class Box {
 	 * - update the available numbers for a single cell.
 	 */
 	/**
-	 * @return the number that has been moved to the cell, 0 if there was an error
+	 * Updates the available numbers for all cells.
+	 * If needed, it asks the board to enqueue a move
 	 */
 	private void updateCellNumbers(int number){
 		for(int i = 0; i < 9; i++)
 			if(boxCells[i].removeAvailable(number) == 1)
-				boxCells[i].move(boxCells[i].getAvailableNumbers()[0]); // Bad, I need some internal private Box.move
+				father.queueMove(startRow + (i / 3), startColumn + (i % 3), boxCells[i].getAvailableNumbers()[0]);
 	}
+	/**
+	 * Updates the available numbers for a row or column.
+	 * If needed, it asks the board to enqueue a move
+	 */
+	private void updateCellNumbers(int number, int row, int col){
+		if(row > 0 && row <= 9){
+			// updates the rows
+			int start = row - startRow;
+			for(int i = start; i < start + 3; i++)
+				if(boxCells[i].removeAvailable(number) == 1)
+					father.queueMove(row, startColumn + (i % 3), boxCells[i].getAvailableNumbers()[0]);
+		}
+		else if (col > 0 && col <= 9){
+			// updates the columns
+			int base = col - startColumn;
+			for(int i = 1; i < 4; i++)
+				if(boxCells[3 * i + base].removeAvailable(number) == 1)
+					father.queueMove(startRow + (i / 3), col, boxCells[3 * i + base].getAvailableNumbers()[0]);
+		}
+	}
+	/**
+	 * Receives a move request from the board and performs it.
+	 * 
+	 * @return the number that has been moved to the cell, 0 if there was an error
+	 */
 	public int cellMove(int row, int col, int value){
 		if((row > 0 && row <= 9) && (col > 0 && col <= 9) && (value > 0 && value <= 9)){
 			int cellIndex = ((row - startRow) * 3) + ((col - startColumn));
