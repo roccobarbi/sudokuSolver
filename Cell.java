@@ -53,7 +53,7 @@ public class Cell {
 	}
 	Cell(int x, int y, Box fatherBox){
 		this(); // inactive by default, unless the rest of the parameters are good
-		if((x >= 0 && x <= 9) && (y >= 0 && y <= 9)){
+		if((x > 0 && x <= 9) && (y > 0 && y <= 9)){
 			row = y;
 			column = x;
 			father = fatherBox;
@@ -65,7 +65,7 @@ public class Cell {
 	}
 	Cell(int x, int y, int filledWith, Box fatherBox){
 		this(); // inactive by default, unless the rest of the parameters are good
-		if((x >= 0 && x <= 9) && (y >= 0 && y <= 9) && (filledWith >= 0 && filledWith <= 9)){
+		if((x > 0 && x <= 9) && (y > 0 && y <= 9) && (filledWith > 0 && filledWith <= 9)){
 			row = y;
 			column = x;
 			father = fatherBox;
@@ -82,6 +82,8 @@ public class Cell {
 	 * Can be uses in expressions like:
 	 * if(cellX.removeAvailable(y) == 1)
 	 *     cellX.move(cellX.getAvailableNumbers[0]);
+	 *     
+	 * @return the new length of the array, 0 if the cell is not active.
 	 */
 	public int removeAvailable(int num){
 		if(isActive){
@@ -106,10 +108,10 @@ public class Cell {
 	
 	/**
 	 * Writes a number to a cell and returns its isFilled status.
-	 * @return
+	 * @return true if the move was completed correctly.
 	 */
 	public boolean move(int value){
-		if(isActive && value >= 0 && value <= 9){
+		if(isActive && value > 0 && value <= 9){
 			number = value;
 			isFilled = true;
 		}
