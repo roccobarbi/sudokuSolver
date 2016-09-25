@@ -81,7 +81,7 @@ public class Cell {
 	 * Reduces the amount of numbers that are available for a move and returns their length.
 	 * Can be uses in expressions like:
 	 * if(cellX.removeAvailable(y) == 1)
-	 *     cellX.move(cellX.getAvailableNumbers[0]);
+	 *     cellX.move(cellX.getAvailableNumbers()[0]);
 	 *     
 	 * @return the new length of the array, 0 if the cell is not active.
 	 */

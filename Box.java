@@ -19,6 +19,7 @@ public class Box {
 	private Board father; // Board to which the box belongs
 	boolean isActive;
 	
+	// Accessors
 	public int[] getAvailableNumbers(){
 		return availableNumbers;
 	}
@@ -35,6 +36,7 @@ public class Box {
 		return father;
 	}
 	
+	// Constructors
 	public Box(){
 		isActive = false; // Can't be created empty
 	}
@@ -51,5 +53,35 @@ public class Box {
 				boxCells[i] = new Cell(rowOne + (i / 3), colOne + (i % 3), cellValues[i], this);
 			}
 		}
+	}
+	
+	/*
+	 * Functionality
+	 * The Box needs to perform the following operations:
+	 * - make a move and update its available numbers (upon request);
+	 * - parse its cells against the available numbers (sending a move request to the board if needed);
+	 * - return the value of a single cell;
+	 * - update the available numbers for a single cell.
+	 */
+	/**
+	 * @return the number that has been moved to the cell, 0 if there was an error
+	 */
+	private void updateCellNumbers(int number){
+		for(int i = 0; i < 9; i++)
+			if(boxCells[i].removeAvailable(number) == 1)
+				boxCells[i].move(boxCells[i].getAvailableNumbers()[0]); // Bad, I need some internal private Box.move
+	}
+	public int cellMove(int row, int col, int value){
+		if((row > 0 && row <= 9) && (col > 0 && col <= 9) && (value > 0 && value <= 9)){
+			int cellIndex = ((row - startRow) * 3) + ((col - startColumn));
+			if(boxCells[cellIndex].move(value)){
+				updateCellNumbers(value);
+				return value;
+			}
+			else
+				return 0;
+		}
+		else
+			return 0;
 	}
 }
