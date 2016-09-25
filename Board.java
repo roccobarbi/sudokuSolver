@@ -10,5 +10,6 @@ package sudokuSolver;
  *
  */
 public class Board {
-
+	private Box[] boardBox;
+	private Move[] moveQueue;
 }
