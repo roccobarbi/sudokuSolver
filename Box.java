@@ -70,14 +70,14 @@ public class Box {
 	 */
 	private void updateCellNumbers(int number){
 		for(int i = 0; i < 9; i++)
-			if(boxCells[i].removeAvailable(number) == 1)
+			if(!boxCells[i].getIsFilled() && boxCells[i].removeAvailable(number) == 1)
 				father.queueMove(startRow + (i / 3), startColumn + (i % 3), boxCells[i].getAvailableNumbers()[0]);
 	}
 	/**
 	 * Updates the available numbers for a row or column.
 	 * If needed, it asks the board to enqueue a move
 	 */
-	private void updateCellNumbers(int number, int row, int col){
+	public void updateCellNumbers(int number, int row, int col){
 		if(row > 0 && row <= 9){
 			// updates the rows
 			int start = row - startRow;
@@ -99,7 +99,9 @@ public class Box {
 	 * @return the number that has been moved to the cell, 0 if there was an error
 	 */
 	public int cellMove(int row, int col, int value){
-		if((row > 0 && row <= 9) && (col > 0 && col <= 9) && (value > 0 && value <= 9)){
+		if((row >= startRow && row <= (startRow + 3))
+				&& (col >= startColumn && col <= (startColumn + 3))
+				&& (value > 0 && value <= 9)){
 			int cellIndex = ((row - startRow) * 3) + ((col - startColumn));
 			if(boxCells[cellIndex].move(value)){
 				updateCellNumbers(value);
