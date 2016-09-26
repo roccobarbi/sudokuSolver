@@ -22,6 +22,19 @@ public class Board {
 		 * to receive the values and pass them along.
 		 */
 	}
+	Board(int[] layout){
+		this();
+		if(layout.length == 81){
+			// I have an int for each cell.
+			// I can assume that anything that is not between 1 and 9 is invalid
+			for(int startRow = 1; startRow < 8; startRow += 3){
+				for(int startColumn = 1; startColumn < 8; startColumn += 3){
+					// I cycle each box
+					Box theBox = new Box(this, startRow, startColumn, null); // To be implemented
+				}
+			}
+		}
+	}
 
 	// Move queue: push and poll. 
 	private boolean pushMove(int row, int col, int value){
