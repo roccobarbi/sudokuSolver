@@ -10,29 +10,40 @@ package sudokuSolver;
  *
  */
 public class Board {
-	private Box[] boardBox;
+	private Box[] boardBox = new Box[9];
 	private Move[] moveQueue;
 	boolean isActive;
 	
 	Board(){
 		isActive = false; // Default: the game can't be played
-		/*
-		 * I have to implement a creator that receives the right value and passes them on
-		 * to the subsequent creators. I will probably need to modify the creators in order
-		 * to receive the values and pass them along.
-		 */
 	}
 	Board(int[] layout){
 		this();
+		int theValue[] = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0}; // Stores the values to be passed to Box
+		int position = 0; // Stores a temporary position in the layout
 		if(layout.length == 81){
 			// I have an int for each cell.
 			// I can assume that anything that is not between 1 and 9 is invalid
 			for(int startRow = 1; startRow < 8; startRow += 3){
 				for(int startColumn = 1; startColumn < 8; startColumn += 3){
-					// I cycle each box
-					Box theBox = new Box(this, startRow, startColumn, null); // To be implemented
+					// I loop through each box
+					for(int rowOffset = 0; rowOffset < 3; rowOffset++)
+						for(int colOffset = 0; colOffset < 3; colOffset++){
+							// I loop throught the box in the layout 
+							position = ((startRow - 1 + rowOffset) * 9);
+							position += (startColumn -1 + colOffset);
+							// I check the value at the position in the layout and assign it to the array accortingly
+							if((layout[position] > 0) && (layout[position] <= 9))
+								theValue[(rowOffset * 3) + colOffset] = layout[position];
+							else
+								theValue[(rowOffset * 3) + colOffset] = 0;
+						}
+					// I create the box and assign it to the array
+					Box theBox = new Box(this, startRow, startColumn, theValue); // To be implemented
+					boardBox[(startRow / 3) * 3 + (startColumn / 3)] = theBox;
 				}
 			}
+			isActive = true;
 		}
 	}
 
