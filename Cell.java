@@ -65,15 +65,17 @@ public class Cell {
 	}
 	Cell(int x, int y, int filledWith, Box fatherBox){
 		this(); // inactive by default, unless the rest of the parameters are good
-		if((x > 0 && x <= 9) && (y > 0 && y <= 9) && (filledWith > 0 && filledWith <= 9)){
+		if((x > 0 && x <= 9) && (y > 0 && y <= 9) && (filledWith >= 0 && filledWith <= 9)){
 			row = y;
 			column = x;
 			father = fatherBox;
 			if(father != null)
 				isActive = true;
-			availableNumbers = null;
+			if(filledWith > 0 && filledWith <= 9){
+				availableNumbers = null;
+				isFilled = true;
+			}
 			number = filledWith;
-			isFilled = true;
 		}
 	}
 	

@@ -48,10 +48,11 @@ public class Box {
 			startRow = rowOne;
 			startColumn = colOne;
 			boxCells = new Cell[9];
-			for(int i = 0; i < cellValues.length; i++){
+			for(int i = 0; i < 9; i++){
 				// procedo per riga e colonna
-				boxCells[i] = new Cell(rowOne + (i / 3), colOne + (i % 3), cellValues[i], this);
+				boxCells[i] = new Cell(rowOne + (i / 3), colOne + (i % 3) - 1, cellValues[i], this);
 			}
+			isActive = true;
 		}
 	}
 	
