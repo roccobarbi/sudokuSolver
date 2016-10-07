@@ -63,6 +63,6 @@ public class Move {
 	}
 	
 	public String toString(){
-		return(String.format("# %10.0d - write %d to row %d and column %d.%n", this.getId(), this.getValue(), this.getRow(), this.getColumn()));
+		return("# " + this.getId() + " - write " + this.getValue() + " to row " + this.getRow() + " and column " + this.getColumn() + "\n");
 	}
 }
