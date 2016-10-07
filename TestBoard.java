@@ -8,23 +8,13 @@ public class TestBoard {
 		for(int value : startValues)
 			value = 0;
 		Board testBoard01 = new Board(startValues);
-		System.out.println("Moving 1 to 1,1");
-		testBoard01.queueMove(1, 1, 1);
-		System.out.println("Moving 2 to 1,2");
-		testBoard01.queueMove(1, 2, 2);
-		System.out.println("Moving 3 to 1,3");
-		testBoard01.queueMove(1, 3, 3);
-		System.out.println("Moving 4 to 1,4");
-		testBoard01.queueMove(1, 4, 4);
-		System.out.println("Moving 5 to 1,5");
-		testBoard01.queueMove(1, 5, 5);
-		System.out.println("Moving 6 to 1,6");
-		testBoard01.queueMove(1, 6, 6);
-		System.out.println("Moving 7 to 1,7");
-		testBoard01.queueMove(1, 7, 7);
-		System.out.println("Moving 8 to 1,8");
-		testBoard01.queueMove(1, 8, 8);
-		if(testBoard01.printMoveQueue() == 8)
+		// First round of tests
+		for(int i = 0; i < 9; i++){
+			System.out.printf("Moving value %d to row 1, column %d%n", i + 1, i);
+			testBoard01.queueMove(1, i, i + 1);
+		}
+		int testResult01 = testBoard01.printMoveQueue();
+		if(testResult01 == 8)
 			System.out.println("First test passed.");
 	}
 

@@ -1,6 +1,7 @@
 package sudokuSolver;
 
 public class Move {
+	private final boolean DEBUG = false;
 	private int column;
 	private int row;
 	private int value;
@@ -10,7 +11,7 @@ public class Move {
 	
 	// Private setters (checks the validity of the values)
 	private boolean setColumn(int newCol){
-		if((newCol > 0) && (newCol < 9)){
+		if((newCol >= 0) && (newCol < 9)){
 			column = newCol;
 			return true;
 		}
@@ -18,7 +19,7 @@ public class Move {
 			return false;
 	}
 	private boolean setRow(int newRow){
-		if((newRow > 0) && (newRow < 9)){
+		if((newRow >= 0) && (newRow < 9)){
 			row = newRow;
 			return true;
 		}
@@ -26,8 +27,10 @@ public class Move {
 			return false;
 	}
 	private boolean setValue(int newValue){
+		if(DEBUG) System.out.println("setValue - newValue = " + newValue);
 		if((newValue > 0) && (newValue <= 9)){
-			row = newValue;
+			if(DEBUG) System.out.println("newValue has been written to row " + row);
+			value = newValue;
 			return true;
 		}
 		else
@@ -63,6 +66,11 @@ public class Move {
 	}
 	
 	public String toString(){
-		return("# " + this.getId() + " - write " + this.getValue() + " to row " + this.getRow() + " and column " + this.getColumn() + "\n");
+		String output = "# " + this.getId();
+		output += " - write " + this.getValue() + " to row " + this.getRow() + " and column " + this.getColumn();
+		output += " - the move ";
+		output += isValid ? "is" : "is not";
+		output += " valid";
+		return output;
 	}
 }

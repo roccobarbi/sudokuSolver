@@ -100,8 +100,8 @@ public class Board {
 		int howManyMoves = -1;
 		if(TESTING){
 			if(movesInQueue != 0){
-				for(Move move : moveQueue){
-					System.out.println(move.toString());
+				for(int i = 0; i < movesInQueue; i++){
+					System.out.println(moveQueue[i].toString());
 				}
 			}
 			else
