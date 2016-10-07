@@ -28,7 +28,7 @@ public class Board {
 		int position = 0; // Stores a temporary position in the layout
 		if(layout.length == 81){
 			// I have an int for each cell.
-			// I can assume that anything that is not between 1 and 9 is invalid
+			// I can assume that anything that is not between 1 and 9 is a void cell
 			for(int startRow = 1; startRow < 8; startRow += 3){
 				for(int startColumn = 1; startColumn < 8; startColumn += 3){
 					// I loop through each box
@@ -78,7 +78,7 @@ public class Board {
 	}
 	
 	/**
-	 * Adds a move to the queue
+	 * Responds to the request to add a move to the queue.
 	 * 
 	 * @return true if done, false if not done
 	 */
