@@ -10,6 +10,7 @@ package sudokuSolver;
  *
  */
 public class Board {
+	private final boolean TESTING = true;
 	private static final int MOVE_QUEUE_LENGTH = 1000;
 	private Box[] boardBox = new Box[9];
 	private Move moveQueue[] = new Move[MOVE_QUEUE_LENGTH];
@@ -89,4 +90,24 @@ public class Board {
 			return false;
 	}
 	
+	/**
+	 * Useful for test-driving the move queue.
+	 * This method does something meaningful only during testing.
+	 * 
+	 * @return the number of moves in the queue, or -1 if there are any errors.
+	 */
+	public int printMoveQueue(){
+		int howManyMoves = -1;
+		if(TESTING){
+			if(movesInQueue != 0){
+				for(Move move : moveQueue){
+					System.out.println(move.toString());
+				}
+			}
+			else
+				System.out.println("There are no moves in the queue");
+			howManyMoves = movesInQueue;
+		}
+		return howManyMoves;
+	}
 }
