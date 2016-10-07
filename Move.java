@@ -8,7 +8,7 @@ public class Move {
 	private boolean isValid;
 	private static long nextId;
 	
-	// Private setters (check the validity of the values
+	// Private setters (checks the validity of the values)
 	private boolean setColumn(int newCol){
 		if((newCol > 0) && (newCol < 9)){
 			column = newCol;
@@ -26,7 +26,7 @@ public class Move {
 			return false;
 	}
 	private boolean setValue(int newValue){
-		if((newValue > 0) && (newValue < 9)){
+		if((newValue > 0) && (newValue <= 9)){
 			row = newValue;
 			return true;
 		}
