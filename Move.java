@@ -61,4 +61,8 @@ public class Move {
 		if(setRow(theRow) && setColumn(theColumn) && setValue(theValue))
 			isValid = true;
 	}
+	
+	public String toString(){
+		return(String.format("# %10.0d - write %d to row %d and column %d.%n", this.getId(), this.getValue(), this.getRow(), this.getColumn()));
+	}
 }
