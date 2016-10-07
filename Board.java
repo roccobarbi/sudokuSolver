@@ -10,13 +10,18 @@ package sudokuSolver;
  *
  */
 public class Board {
+	private static final int MOVE_QUEUE_LENGTH = 1000;
 	private Box[] boardBox = new Box[9];
-	private Move[] moveQueue;
+	private Move moveQueue[] = new Move[MOVE_QUEUE_LENGTH];
+	private int movesInQueue = 0; // Keeps track of the amount of moves in the queue
 	boolean isActive;
 	
+	// Default creator
 	Board(){
 		isActive = false; // Default: the game can't be played
+		movesInQueue = 0;
 	}
+	// Creator that takes an int array with all 81 cells in sequence, row-wise
 	Board(int[] layout){
 		this();
 		int theValue[] = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0}; // Stores the values to be passed to Box
@@ -49,30 +54,26 @@ public class Board {
 
 	// Move queue: push and poll. 
 	private boolean pushMove(int row, int col, int value){
-		Move theMove = new Move(row, col, value);
-		if(theMove.getIsValid()){
-			int theLength = moveQueue.length + 1;
-			Move[] theQueue = new Move[theLength];
-			for(int i = 0; i < theLength - 1; i++)
-				theQueue[i] = moveQueue[i];
-			theQueue[theLength - 1] = theMove;
-			moveQueue = theQueue;
-			return true;
+		boolean hasBeenDone = false;
+		if(movesInQueue < MOVE_QUEUE_LENGTH){
+			Move theMove = new Move(row, col, value);
+			if(theMove.getIsValid()){
+				moveQueue[movesInQueue] = theMove;
+				movesInQueue++;
+				hasBeenDone = true;
+			}
 		}
-		else
-			return false;
+		return hasBeenDone;
 	}
 	private Move pollMove(){
-		int theLength = moveQueue.length;
-		if(theLength == 0)
-			return null;
-		Move theMove = moveQueue[0];
-		theLength -= 1;
-		Move[] theQueue = new Move[theLength];
-		if(theLength > 0)
-			for(int i = 0; i < theLength; i++)
-				theQueue[i] = moveQueue[i + 1];
-		moveQueue = theQueue;
+		Move theMove = null;
+		if(movesInQueue > 0){
+			theMove = moveQueue[0];
+			if(movesInQueue > 1)
+				for(int i = 0; i < movesInQueue; i++)
+					moveQueue[i] = moveQueue[i + 1];
+			movesInQueue--;
+		}
 		return theMove;
 	}
 	
