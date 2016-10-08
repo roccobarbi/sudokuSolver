@@ -50,7 +50,7 @@ public class Box {
 			boxCells = new Cell[9];
 			for(int i = 0; i < 9; i++){
 				// procedo per riga e colonna
-				boxCells[i] = new Cell(rowOne + (i / 3), colOne + (i % 3) - 1, cellValues[i], this);
+				boxCells[i] = new Cell(rowOne + (i / 3), colOne + (i % 3) - 1, this, cellValues[i]);
 			}
 			isActive = true;
 		}

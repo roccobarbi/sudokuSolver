@@ -10,7 +10,7 @@ package sudokuSolver;
  *
  */
 public class Board {
-	private final boolean TESTING = true;
+	private final boolean TESTING = false;
 	private static final int MOVE_QUEUE_LENGTH = 1000;
 	private Box[] boardBox = new Box[9];
 	private Move moveQueue[] = new Move[MOVE_QUEUE_LENGTH];
