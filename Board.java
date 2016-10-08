@@ -23,7 +23,7 @@ public class Board {
 		movesInQueue = 0;
 	}
 	// Creator that takes an int array with all 81 cells in sequence, row-wise
-	Board(int[] layout){
+	public Board(int[] layout){
 		this();
 		int theValue[] = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0}; // Stores the values to be passed to Box
 		int position = 0; // Stores a temporary position in the layout

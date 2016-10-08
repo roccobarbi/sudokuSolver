@@ -59,7 +59,7 @@ public class Move {
 		isValid = false;
 	}
 	// Correct constructor
-	Move(int theRow, int theColumn, int theValue){
+	public Move(int theRow, int theColumn, int theValue){
 		this();
 		if(setRow(theRow) && setColumn(theColumn) && setValue(theValue))
 			isValid = true;
