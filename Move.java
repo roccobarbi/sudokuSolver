@@ -6,7 +6,7 @@ public class Move {
 	private int row;
 	private int value;
 	private long id;
-	private boolean isValid;
+	private boolean isValid, isPlayed;
 	private static long nextId;
 	
 	// Private setters (checks the validity of the values)
@@ -36,7 +36,7 @@ public class Move {
 		else
 			return false;
 	}
-	// Public getters
+	// Public getters and setters
 	public int getColumn(){
 		return column;
 	}
@@ -52,11 +52,18 @@ public class Move {
 	public boolean getIsValid(){
 		return isValid;
 	}
+	public void setIsPlayed(boolean status){
+		isPlayed = status;
+	}
+	public boolean getIsPlayed(){
+		return isPlayed;
+	}
 	
 	// Default constructor, sets the id
 	Move(){
 		id = nextId++;
 		isValid = false;
+		isPlayed = false;
 	}
 	// Correct constructor
 	public Move(int theRow, int theColumn, int theValue){
@@ -71,6 +78,9 @@ public class Move {
 		output += " - the move ";
 		output += isValid ? "is" : "is not";
 		output += " valid";
+		output += " - the move ";
+		output += isPlayed ? "has been" : "has not been";
+		output += " played";
 		return output;
 	}
 }

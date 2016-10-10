@@ -15,6 +15,7 @@ public class MoveQueue {
 		validToPlay = 0;
 		invalidCount = 0;
 		garbageTolerance = 0;
+		length = 100; // Default
 	}
 	public MoveQueue(int theLength){
 		this();
@@ -45,6 +46,34 @@ public class MoveQueue {
 		return garbageTolerance;
 	}
 	
+	// Utility methods (private)
+	/**
+	 * 
+	 * @return the index of the first valid and non-played move in the queue, or -1 if not found
+	 */
+	private int findFirstToMove(){
+		int totalLogged = validPlayed + validToPlay + invalidCount;
+		int startingPoint = 0;
+		int index = -1, i = 0;
+		boolean keepLooking = true;
+		// Set the starting point to account for garbage collection and logged counts.
+		if(totalLogged != (length - spareRows))
+			startingPoint = validPlayed;
+		else
+			startingPoint = validPlayed - (totalLogged - length - spareRows);
+		startingPoint = (startingPoint >= 0 ? startingPoint : 0);
+		// Loop and look
+		while(keepLooking){
+			if(!queue[i].getIsPlayed()){
+				index = i;
+				keepLooking = false;
+			}
+			if(++i >= length)
+				keepLooking = false;
+		}
+		return index;
+	}
+	
 	// Functionality (add and query moves)
 	/*
 	 * Da migliorare:
@@ -62,10 +91,16 @@ public class MoveQueue {
 		}
 		return hasBeenDone;
 	}
+	/**
+	 * Extracts the first move from the queue and returns it,
+	 * moving the queue's contents left by one and freeing an
+	 * additional slot at the end of the queue.
+	 * 
+	 * @return the first move in the queue
+	 */
 	/*
 	 * Da migliorare:
 	 * - forse mi serve un contatore del numero totale di mosse in coda;
-	 * - devo aggiornare il contatore delle giocate/da giocare.
 	 */
 	public Move poll(){
 		Move theMove = null;
@@ -77,14 +112,17 @@ public class MoveQueue {
 			spareRows++;
 			nextFree--;
 			nextMove--;
+			if(!theMove.getIsPlayed()){
+				validPlayed++;
+				validPlayed--;
+			}
 		}
 		return theMove;
 	}
 	/*
 	 * Da migliorare:
 	 * - forse mi serve un contatore del numero totale di mosse in coda;
-	 * - devo aggiornare il contatore delle mosse giocate/da giocare;
-	 * - devo verificare se la mossa è valida e se la precedente è stata giocata,
+	 * - devo verificare se la mossa Ã¨ valida e se la precedente Ã¨ stata giocata,
 	 *   prima di aggiornare nextMove.
 	 */
 	public Move pop(){
@@ -93,14 +131,18 @@ public class MoveQueue {
 			theMove = queue[length - spareRows - 1];
 			spareRows++;
 			nextFree--;
-			nextMove--;
+			nextMove = findFirstToMove();
+		}
+		if(!theMove.getIsPlayed()){
+			validPlayed++;
+			validPlayed--;
 		}
 		return theMove;
 	}
 	/*
 	 * Da migliorare:
 	 * - mi servono dei setter per incrementare i vari contatori;
-	 * - per incrementare nextMove devo verificare se la successiva è valida.
+	 * - per incrementare nextMove devo verificare se la successiva ï¿½ valida.
 	 */
 	public Move next(){
 		Move theMove = null;
